@@ -1,18 +1,8 @@
-pipeline {
-    agent any
-    tools {
-        maven 'Maven 3.9.8'
-    }
+agent any
     stages {
-        stage("Build") {
+        stage('Build') {
             steps {
-                sh "mvn clean install -Dmaven.test.skip=true"
+                sh 'mvn -B -DskipTests clean package'
             }
         }
     }
-    post {
-        always {
-            cleanWs()
-        }
-    }
-}
