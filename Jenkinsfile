@@ -1,18 +1,46 @@
+// pipeline {
+//     agent any
+//     tools {
+//         maven "maven_home"
+//     }
+//     stages {
+//         stage("Build") {
+//             steps {
+//                 sh "mvn package"
+//             }
+//         }
+//     }
+//     post {
+//         always {
+//             cleanWs()
+//         }
+//     }
+// }
 pipeline {
     agent any
     tools {
-        maven "maven_home"
+        maven 'Maven 3.3.9'
+        jdk 'jdk8'
     }
     stages {
-        stage("Build") {
+        stage ('Initialize') {
             steps {
-                sh "mvn package"
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
             }
         }
-    }
-    post {
-        always {
-            cleanWs()
+
+        stage ('Build') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install'
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml'
+                }
+            }
         }
     }
 }
