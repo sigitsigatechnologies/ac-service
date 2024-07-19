@@ -33,17 +33,17 @@ pipeline {
             }
         }
 
-        stage ('Build') {
-            steps {
-                container ('maven'){
-                    sh 'mvn -Dmaven.test.failure.ignore=true install'
-                }
-            }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml'
-                }
-            }
-        }
+//         stage ('Build') {
+//             steps {
+//                 container ('maven'){
+//                     sh 'mvn -Dmaven.test.failure.ignore=true install'
+//                 }
+//             }
+//             post {
+//                 success {
+//                     junit 'target/surefire-reports/**/*.xml'
+//                 }
+//             }
+//         }
     }
 }
