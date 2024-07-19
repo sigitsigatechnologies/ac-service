@@ -24,11 +24,12 @@ pipeline {
     stages {
         stage ('Initialize') {
             steps {
-                sh 'mvn -version'
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
+                container ('maven'){
+                    sh '''
+                         echo "PATH = ${PATH}"
+                         echo "M2_HOME = ${M2_HOME}"
+                       '''
+                }
             }
         }
 
